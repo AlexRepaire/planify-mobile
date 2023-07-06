@@ -1,20 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import "react-native-gesture-handler";
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import { AuthProvider } from './src/context/AuthContext';
+import Routes from './src/navigation/routes';
+import { TaskProvider } from "./src/context/TaskContext";
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-export default function App() {
+function App() {
+  const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: '#fff'
+    },
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaProvider>
+      <AuthProvider>
+        <TaskProvider>
+          <NavigationContainer theme={MyTheme}>
+            <Routes />
+          </NavigationContainer>
+        </TaskProvider>
+      </AuthProvider>
+    </SafeAreaProvider>
+
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
